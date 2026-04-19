@@ -114,8 +114,11 @@ return tasklist.filter((t:Task)=>{
 
  
     useEffect(()=>{
-    const storagelist=JSON.parse(localStorage.getItem("tasks") || "[]");
-    settasklist(storagelist);
+      if(typeof window ==="undefined") return;
+    const storagelist=localStorage.getItem("tasks");
+    if(storagelist){
+      settasklist(JSON.parse(storagelist))
+    }
     },[])
    
      function handleaddtask(){
