@@ -17,7 +17,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Toastcontext } from '../contexts/taostcontext';
+import {Toastcontext} from '../contexts/taostcontext';
 
  type Task ={
     id:string;
@@ -40,7 +40,11 @@ export default function Tasklist(){
    const [showdialog,setshowdialog]=useState(false);
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
-    const {showhidetoast}=useContext(Toastcontext);
+    const context=useContext(Toastcontext);
+    if (!context){
+      throw new Error ("Toastcontext must be used within ToastProvider");
+    }
+    const { showhidetoast }=context;
     const [isDarkmode,setisDarkmode]=useState(false);
 
     useEffect(()=>{
