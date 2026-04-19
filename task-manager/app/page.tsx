@@ -2,13 +2,23 @@
 import { Taskscontext } from "./contexts/taskcontext";
 import Tasklist from "./components/Tasklist";
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Mysnackbar from "./components/mysnackbar";
 import { Toastcontext } from "./contexts/taostcontext";
 
+type Task = {
+  id: string;
+  title: string;
+  details: string;
+  completed: boolean;
+  file: {
+    data: string;
+    name: string;
+    type: string;
+  } | null;
+};
 
-
-  const initiallist=[
+  const initiallist:Task[]=[
     {
       id:uuidv4(),
       title:"task1",
@@ -33,9 +43,23 @@ import { Toastcontext } from "./contexts/taostcontext";
   ];
 export default function Home() {
 
-const [tasklist,settasklist]=useState(initiallist);
+const [tasklist,settasklist]=useState<Task[]>(initiallist);
+
  const [open, setOpen] =useState(false);
-const [message,setmessage]=useState("")
+const [message,setmessage]=useState("");
+
+
+useEffect(() => {
+  const data = localStorage.getItem("tasks");
+
+  if (data) {
+    settasklist(JSON.parse(data));
+  } else {
+    settasklist(initiallist);
+  }
+}, []);
+
+
  function showhidetoast(message:string){
 
   setOpen(true);
