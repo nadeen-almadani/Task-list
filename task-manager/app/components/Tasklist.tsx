@@ -59,23 +59,31 @@ export default function Tasklist(){
    
   
    //handlefile
-   const handlefile=(file:File,index:number)=>{
-    const reader=new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload=()=>{
-      
-        const updatedlist=[...tasklist];
-    updatedlist[index].file={
-        data:reader.result as string,
-        name:file.name,
-        type:file.type
-    };
-    
+
+const handlefile = (file: File, taskId: string) => {
+  const reader = new FileReader();
+
+  reader.readAsDataURL(file);
+
+  reader.onload = () => {
+    const updatedlist = tasklist.map((t) => {
+      if (t.id === taskId) {
+        return {
+          ...t,
+          file: {
+            data: reader.result as string,
+            name: file.name,
+            type: file.type,
+          },
+        };
+      }
+      return t;
+    });
+
     settasklist(updatedlist);
-    localStorage.setItem("tasks",JSON.stringify(updatedlist))
-    }
-    
-   }
+    localStorage.setItem("tasks", JSON.stringify(updatedlist));
+  };
+};
 
 
 //filteration
@@ -108,8 +116,8 @@ return tasklist.filter((t:Task)=>{
     listtoberendered=tasklist;
   }
 
-  const tasks=listtoberendered.map((t:Task,index:number)=>{
-   return <Task key={t.id} task={t} index={index} onfilechange={handlefile} opendelete={opendeletedialog} openupdate={openupdatedialog}/>
+  const tasks=listtoberendered.map((t:Task)=>{
+   return <Task key={t.id} task={t}  onfilechange={handlefile} opendelete={opendeletedialog} openupdate={openupdatedialog}/>
     });
 
  
