@@ -34,12 +34,18 @@ import {Toastcontext} from '../contexts/taostcontext';
 
 
 export default function Tasklist(){
- const {tasklist,settasklist}=useContext(Taskscontext) as {tasklist:Task[]; settasklist:React.Dispatch<React.SetStateAction<Task[]>>}
+ const context1=useContext(Taskscontext);
+ if (!context1){
+      throw new Error ("Taskcontext must be used within provider");
+    }
+    const {tasklist,settasklist}=context1;
+
   const [inputtitle,setinputtitle]=useState("");
   const [displayedtasktype,setdisplaytasktype]=useState("all");
    const [showdialog,setshowdialog]=useState(false);
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
+
     const context=useContext(Toastcontext);
     if (!context){
       throw new Error ("Toastcontext must be used within ToastProvider");
