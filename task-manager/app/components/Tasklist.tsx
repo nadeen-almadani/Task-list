@@ -278,7 +278,7 @@ function handleClose(){
       <ToggleButtonGroup
       value={displayedtasktype}
       exclusive
-      onChange={(e)=>{setdisplaytasktype(e.target.value)}}>
+      onChange={(event,newvalue)=>{setdisplaytasktype(newvalue)}}>
       <ToggleButton value="all" aria-label="left aligned">
         all
       </ToggleButton>
