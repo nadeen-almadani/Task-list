@@ -34,14 +34,13 @@ type subtask={
 
 type Taskprops={
   task:Task;
-  index:number;
- onfilechange:(file:File,index:number) =>void;
+ onfilechange:(file:File,taskId:string) =>void;
  opendelete:(task:Task)=>void;
  openupdate:(task:Task)=>void;
 
 }
 
-export default function Task({task,opendelete,openupdate,index,onfilechange}:Taskprops){
+export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops){
   const {tasklist,settasklist}=useContext(Taskscontext);
   const[subtasks,setsubtasks]=useState<subtask[]>([
     {title:"subtask 1",completed:false},
@@ -76,7 +75,7 @@ export default function Task({task,opendelete,openupdate,index,onfilechange}:Tas
    const handlechange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     if(!e.target.files)return ;
     const file=e.target.files[0];
-    onfilechange(file,index);
+    onfilechange(file,task.id);
    };
   
 // show dialog for delete task
