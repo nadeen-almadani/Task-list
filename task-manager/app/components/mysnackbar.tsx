@@ -1,12 +1,16 @@
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
 
-export default function Mysnackbar({open,message}) {
+type MysnackbarProbs={
+  open:boolean;
+  message:string;
+}
+
+export default function Mysnackbar({open,message}:MysnackbarProbs) {
  
 
   
