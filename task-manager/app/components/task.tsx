@@ -48,7 +48,11 @@ export default function Task({task,opendelete,openupdate,index,onfilechange}:Tas
     {title:"subtask 2",completed:false}
   ]);
   const [newsubtask,setnewsubtask]=useState<string>("");
-  const {showhidetoast}=useContext(Toastcontext);
+  const context=useContext(Toastcontext);
+  if(!context){
+    throw new Error("Toastcontext must be used within provider");
+  }
+  const {showhidetoast}=context;
 
 
    
