@@ -53,26 +53,6 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
   }
   const {showhidetoast}=context;
 
-
-   
-  useEffect(() => {
-  const alldone = subtasks.every(sub => sub.completed);
-
-  if (task.completed === alldone) return; 
-
-  const updatedlist = tasklist.map((t: Task) => {
-    if (t.id === task.id) {
-      return { ...t, completed: alldone };
-    }
-    return t;
-  });
-
-  settasklist(updatedlist);
-  localStorage.setItem("tasks",JSON.stringify(updatedlist))
-  showhidetoast(alldone ?"Task has been checked" : "Task is now unchecked")
-}, [subtasks,task.id]);
-  
-
    const handlechange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     if(!e.target.files)return ;
     const file=e.target.files[0];
@@ -113,8 +93,8 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
       return;
     }
     const updatedlist=tasklist.map((t:Task)=>{
-         if(task.id==t.id){
-           t.completed=!t.completed
+         if(task.id===t.id){
+           return {...t,completed:!t.completed}
          }
          return t;
         }
