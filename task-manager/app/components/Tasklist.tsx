@@ -46,6 +46,16 @@ export default function Tasklist(){
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
 
+
+    useEffect(()=>{
+      if(typeof window ==="undefined") return;
+    const storagelist=localStorage.getItem("tasks");
+    if(storagelist){
+      settasklist(JSON.parse(storagelist))
+    }
+    },[]);
+    
+   
     const context=useContext(Toastcontext);
     if (!context){
       throw new Error ("Toastcontext must be used within ToastProvider");
@@ -127,14 +137,7 @@ return tasklist.filter((t:Task)=>{
     });
 
  
-    useEffect(()=>{
-      if(typeof window ==="undefined") return;
-    const storagelist=localStorage.getItem("tasks");
-    if(storagelist){
-      settasklist(JSON.parse(storagelist))
-    }
-    },[])
-   
+    
      function handleaddtask(){
         const newtask={
           id:uuidv4(),
