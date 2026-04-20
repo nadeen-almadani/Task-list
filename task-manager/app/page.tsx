@@ -42,22 +42,17 @@ type Task = {
     }
   ];
 export default function Home() {
-
-const [tasklist,settasklist]=useState<Task[]>(initiallist);
-
  const [open, setOpen] =useState(false);
 const [message,setmessage]=useState("");
 
 
-useEffect(() => {
-  const data = localStorage.getItem("tasks");
-
-  if (data) {
-    settasklist(JSON.parse(data));
-  } else {
-    settasklist(initiallist);
+const [tasklist, settasklist] = useState<Task[]>(() => {
+  if (typeof window !== "undefined") {
+    const data = localStorage.getItem("tasks");
+    return data ? JSON.parse(data) : initiallist;
   }
-}, []);
+  return initiallist;
+});
 
 
  function showhidetoast(message:string){

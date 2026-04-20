@@ -46,15 +46,6 @@ export default function Tasklist(){
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
 
-
-    useEffect(()=>{
-      if(typeof window ==="undefined") return;
-    const storagelist=localStorage.getItem("tasks");
-    if(storagelist){
-      settasklist(JSON.parse(storagelist))
-    }
-    },[]);
-    
    
     const context=useContext(Toastcontext);
     if (!context){
