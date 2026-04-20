@@ -68,8 +68,9 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
   });
 
   settasklist(updatedlist);
+  localStorage.setItem("tasks",JSON.stringify(updatedlist))
   showhidetoast(alldone ?"Task has been checked" : "Task is now unchecked")
-}, [subtasks]);
+}, [subtasks,task.id]);
   
 
    const handlechange=(e:React.ChangeEvent<HTMLInputElement>)=>{
