@@ -50,14 +50,13 @@ const [tasklist, settasklist] = useState<Task[]>([]);
 const [isLoaded, setIsLoaded] = useState(false);
 
 useEffect(() => {
-  if (typeof window === "undefined") return;
-
   const data = localStorage.getItem("tasks");
 
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     settasklist(JSON.parse(data));
   } else {
     settasklist(initiallist);
+    localStorage.setItem("tasks", JSON.stringify(initiallist));
   }
 
   setIsLoaded(true);
@@ -73,7 +72,7 @@ useEffect(() => {
  }
  
  if(!isLoaded) return null;
- 
+
   return (
     
 
