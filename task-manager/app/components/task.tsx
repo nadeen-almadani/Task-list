@@ -41,7 +41,11 @@ type Taskprops={
 }
 
 export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops){
-  const {tasklist,settasklist}=useContext(Taskscontext);
+  const context1=useContext(Taskscontext);
+  if(!context1){
+    throw new Error("Taskscontext must be used within provider");
+  }
+  const {tasklist,settasklist}=context1;
   const[subtasks,setsubtasks]=useState<subtask[]>([
     {title:"subtask 1",completed:false},
     {title:"subtask 2",completed:false}
