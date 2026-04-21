@@ -18,7 +18,24 @@ type Task = {
   } | null;
 };
 
-  const initiallist:Task[]=[
+  
+export default function Home() {
+  const [tasklist, settasklist] = useState<Task[]>([]);
+ const [open, setOpen] =useState(false);
+const [message,setmessage]=useState("");
+
+
+
+
+
+useEffect (()=>{
+  
+   const data =localStorage.getItem("tasks");
+   if(data){
+    settasklist(JSON.parse(data))
+   }
+   else {
+    const initiallist:Task[]=[
     {
       id:uuidv4(),
       title:"task1",
@@ -41,26 +58,12 @@ type Task = {
       file:null
     }
   ];
-export default function Home() {
-  const [tasklist, settasklist] = useState<Task[]>(()=>{
-    if(typeof window !!== "undefined"){
-      const data =localStorage.getItem("tasks");
-      return data ? JSON.parse(data) : initiallist;
-    }
-    return initiallist;
-  });
- const [open, setOpen] =useState(false);
-const [message,setmessage]=useState("");
 
-
-
-
-
-useEffect (()=>{
+  settasklist(initiallist);
+  localStorage.setItem("tasks",JSON.stringify(initiallist))
+   }
   
-    localStorage.setItem("tasks",JSON.stringify(tasklist));
-  
-},[tasklist]);
+},[]);
 
 
  function showhidetoast(message:string){
@@ -72,7 +75,6 @@ useEffect (()=>{
   },2000)
  }
  
- if(!isLoaded) return null;
 
   return (
     
