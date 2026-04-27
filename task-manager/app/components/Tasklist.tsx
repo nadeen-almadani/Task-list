@@ -45,6 +45,23 @@ export default function Tasklist(){
    const [showdialog,setshowdialog]=useState(false);
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
+    const [users,setusers]=useState<any[]>([]);
+    
+    //API
+    useEffect(()=>{
+      fetch("https://jsonplaceholder.typicode.com/users")
+     .then((res)=>{
+      console.log("response",res);
+      return res.json();
+     })
+     .then((data)=>{
+      console.log("data",data)
+      setusers(data)
+     })
+     .catch((error)=>{
+      console.log("error",error)
+     })
+    },[]);
 
    
     const context=useContext(Toastcontext);
@@ -196,13 +213,34 @@ function handleClose(){
   }
 
 
-      
+     // stats
+     const total=tasklist.length;
+     const completed=tasklist.filter((t)=>t.completed).length;
+     const pending= total-completed ;
 
   return (
+
     <div className={isDarkmode ? "app dark" : "app light"}>
           <button className="theme-btn" onClick={()=>setisDarkmode(!isDarkmode)}>
             {isDarkmode ?"LightMode" : "DarkMode"}
            </button>
+
+           <div style={{marginBottom:"20px",display:"flex",gap:"15px"}}>
+           <div style={{flex:1,padding:"15px",border:"1px solid #ccc",borderRadius:"8px",textAlign:"center",background:"#f5f5f5"}}>
+           <h4>Total Tasks</h4>
+           <p>{total}</p>
+           </div>
+
+           <div style={{flex:1,padding:"15px",border:"1px solid #ccc",borderRadius:"8px",textAlign:"center",background:"#f5f5f5"}}>
+            <h4>Completed Tasks</h4>
+            <p>{completed}</p>
+           </div>
+
+            <div style={{flex:1,padding:"15px",border:"1px solid #ccc",borderRadius:"8px",textAlign:"center",background:"#f5f5f5"}}>
+            <h4>Pending Tasks</h4>
+            <p>{pending}</p>
+           </div>
+           </div>
 
          {/*  Dialog for delete  task */}
          <Dialog
@@ -274,7 +312,9 @@ function handleClose(){
       </Dialog>
 
        <Container maxWidth="sm" className="taskcontainer" >
-         <Box sx={{textAlign:"center",mt:4}} className="boxcard">
+        <div style={{display:"flex",gap:"20px"}}>
+           <div style={{flex:2}}>
+            <Box sx={{textAlign:"center",mt:4}} className="boxcard">
 
           <div className="header">
            <Typography variant="h5" style={{color:"#e75480",marginBottom:"35px"}} >
@@ -322,7 +362,28 @@ function handleClose(){
         
       </Grid>
 
-    </Box>
+      
+         </Box>
+        </div>
+
+        <div style={{marginTop:"20px",flex:1}}>
+       <h2 style={{textAlign:"center",color:"#e75480"}}>Users</h2>
+    
+      {users.map((u:any)=>(
+          <div key={u.id}  style={{border:"1px solid #ccc",padding:"10px",marginBottom:"10px",background:"#f5f5f5"}} >
+         <p>{u.name}</p>
+         <p>{u.email}</p>
+
+       </div>
+      ))}
+       
+      </div>
+        </div>
+       
+       
+
+    
+
       </Container>
     </div>
 

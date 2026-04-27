@@ -78,7 +78,8 @@ body {
 
 .taskcontainer{
   width:min(100%,460px);
-  padding:24px
+  padding:24px;
+  
 }
 
 .boxcard{
