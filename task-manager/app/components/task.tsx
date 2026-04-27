@@ -139,7 +139,7 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
            </Typography>
         </Grid>
 
-        <Grid size={4} display="flex" justifyContent="space-around" alignItems="center" padding="10px">
+        <Grid size={4} display="flex" justifyContent="flex-end"  gap="6px" >
          <IconButton className="iconbutton" onClick={handlecheck}>
             <CheckIcon style={{border:"solid #757575",background:task.completed?"#ef9a9a" :"gray"
               ,color:"white"}} />
