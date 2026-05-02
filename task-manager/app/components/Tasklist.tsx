@@ -18,6 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Toastcontext} from '../contexts/taostcontext';
+import { PieChart,Pie,Cell,Tooltip,Legend } from 'recharts';
 
  type Task ={
     id:string;
@@ -46,6 +47,7 @@ export default function Tasklist(){
    const [dialogtask,setdialogtask]=useState<Task | null>(null);
     const [showupdatedialog,setshowupdatedialog]=useState(false);
     const [users,setusers]=useState<any[]>([]);
+    const [search,setSearch]=useState("");
     
     //API
     useEffect(()=>{
@@ -218,6 +220,16 @@ function handleClose(){
      const completed=tasklist.filter((t)=>t.completed).length;
      const pending= total-completed ;
 
+     // charts
+     const chartdata=[
+      {name:"completed",value:completed},
+      {name:"pending",value:pending}
+     ];
+
+     // search
+     const filteredUsers=users.filter((u:any)=>
+      u.name.toLowerCase().includes(search.toLocaleLowerCase()));
+
   return (
 
     <div className={isDarkmode ? "app dark" : "app light"}>
@@ -241,6 +253,31 @@ function handleClose(){
             <p>{pending}</p>
            </div>
            </div>
+
+
+          {/*charts */}
+          <div style={{background:"white",padding:"20px",borderRadius:"12px",boxShadow:"0 2px 10px rgba(0,0,0,0.1)",marginBottom:"20px"}}>
+            <h3 style={{textAlign:"center",marginBottom:"10px"}}>Tasks Overview</h3>
+             <div style={{ display: "flex", justifyContent: "center" }}>
+          <PieChart width={350} height={300}>
+           <Pie
+               data={chartdata}
+               dataKey="value"
+               nameKey="name"
+               outerRadius={110}
+               innerRadius={60}
+               label
+    >
+              <Cell />
+              <Cell />
+         </Pie>
+                <Tooltip />
+                 <Legend />
+  </PieChart>
+</div>
+          </div>
+         
+
 
          {/*  Dialog for delete  task */}
          <Dialog
@@ -311,6 +348,10 @@ function handleClose(){
         </DialogActions>
       </Dialog>
 
+      <div style={{marginTop:"20px",border:"1px solid #ccc",background:"#f5f5f5",padding:"2px"}}>
+         <input type='text' placeholder='search users' value={search} onChange={(e)=>setSearch(e.target.value)}/>
+      </div>
+
        <Container maxWidth="sm" className="taskcontainer" >
         <div style={{display:"flex",gap:"20px"}}>
            <div style={{flex:2}}>
@@ -366,16 +407,22 @@ function handleClose(){
          </Box>
         </div>
 
-        <div style={{marginTop:"20px",flex:1}}>
+    
+       
+        <div style={{marginTop:"40px",flex:1,height:"400px",overflowY:"auto",padding:"10px",borderRadius:"12px",background:"white"}}>
        <h2 style={{textAlign:"center",color:"#e75480"}}>Users</h2>
     
-      {users.map((u:any)=>(
+      {filteredUsers.length === 0 ?(
+        <p style={{textAlign:"center",color:"gray"}}>No users found</p>
+      ):(
+        filteredUsers.map((u:any)=>(
           <div key={u.id}  style={{border:"1px solid #ccc",padding:"10px",marginBottom:"10px",background:"#f5f5f5"}} >
          <p>{u.name}</p>
          <p>{u.email}</p>
 
        </div>
-      ))}
+      ))
+      )}
        
       </div>
         </div>

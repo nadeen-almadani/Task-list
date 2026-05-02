@@ -91,6 +91,16 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
   }
 
    function handlecheck(){
+    if(task.completed){
+     const updatedlist=tasklist.map((t:Task)=>{
+      if(task.id===t.id){return {...t,completed:false}}
+      return t;
+     });
+     settasklist(updatedlist);
+     localStorage.setItem("tasks",JSON.stringify(updatedlist));
+     showhidetoast("Task unchecked");
+     return;
+    }
     const alldone=subtasks.every(sub => sub.completed);
     if(!alldone){
       showhidetoast("completed all subtasks first");
@@ -98,7 +108,7 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
     }
     const updatedlist=tasklist.map((t:Task)=>{
          if(task.id===t.id){
-           return {...t,completed:!t.completed}
+           return {...t,completed:true}
          }
          return t;
         }
@@ -128,7 +138,7 @@ export default function Task({task,opendelete,openupdate,onfilechange}:Taskprops
 
   <Box   className="taskbox">
 
- <Grid container spacing={2}>
+ <Grid container spacing={1}>
         <Grid size={8} padding="10px">
          <Typography variant="h5" style={{color:"#616161",textAlign:"left",textDecoration:task.completed ?"line-through" :"none"}} >
              {task.title}

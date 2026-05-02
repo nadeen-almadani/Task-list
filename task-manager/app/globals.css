@@ -56,16 +56,19 @@ body {
 .taskbox{
   background:#ffffff;
   text-align: center;
-  margin-top: 25px;
+  margin-bottom: 15px;
   border:1px solid #f06292;
   border-radius: 25px;
   transition: all 0.3 !important;
+  box-shadow: 0 2px 8px rgba(0, 0,0, 0.1);
+  padding: 15px;
 }
 
 .taskbox:hover{
   padding-bottom: 20px;
   padding-top: 20px;
   box-shadow: 0px 7px 7px rgba(0, 0,0, 0.4);
+  transform: translateY(-3px);
 }
 
 .iconbutton{
