@@ -29,10 +29,16 @@ const [message,setmessage]=useState("");
 
 
 useEffect (()=>{
+  if (typeof window === "undefined") return;
   
    const data =localStorage.getItem("tasks");
    if(data){
+    try {
     settasklist(JSON.parse(data))
+    } catch{
+      settasklist([])
+    }
+    
    }
    else {
     const initiallist:Task[]=[
