@@ -28,48 +28,35 @@ const [message,setmessage]=useState("");
 
 
 
-useEffect (()=>{
+useEffect(() => {
   if (typeof window === "undefined") return;
-  
-   const data =localStorage.getItem("tasks");
-   if(data){
-    try {
-    settasklist(JSON.parse(data))
-    } catch{
-      settasklist([])
-    }
-    
-   }
-   else {
-    const initiallist:Task[]=[
-    {
-      id:uuidv4(),
-      title:"task1",
-      details:"details of task1",
-      completed:false,
-      file:null
-    },
-    {
-      id:uuidv4(),
-      title:"task2",
-      details:"details of task2",
-      completed:false,
-      file:null
-    },
-    {
-      id:uuidv4(),
-      title:"task3",
-      details:"details of task3",
-      completed:false,
-      file:null
-    }
-  ];
 
-  settasklist(initiallist);
-  localStorage.setItem("tasks",JSON.stringify(initiallist))
-   }
-  
-},[]);
+  const data = localStorage.getItem("tasks");
+
+  if (data && data !== "undefined") {
+    settasklist(JSON.parse(data));
+  } else {
+    const initiallist = [
+      {
+        id: uuidv4(),
+        title: "task1",
+        details: "details of task1",
+        completed: false,
+        file: null,
+      },
+      {
+        id: uuidv4(),
+        title: "task2",
+        details: "details of task2",
+        completed: false,
+        file: null,
+      },
+    ];
+
+    settasklist(initiallist);
+    localStorage.setItem("tasks", JSON.stringify(initiallist));
+  }
+}, []);
 
 
  function showhidetoast(message:string){
