@@ -355,7 +355,7 @@ function handleClose(){
       </div>
 
        <Container maxWidth="sm" className="taskcontainer" >
-        <div style={{display:"flex",gap:"20px"}}>
+        <div className="dashboard-container" style={{display:"flex",gap:"20px",flexWrap:"wrap",flexDirection:"row"}}>
            <div style={{flex:2}}>
             <Box sx={{textAlign:"center",mt:4}} className="boxcard">
 
@@ -411,14 +411,14 @@ function handleClose(){
 
     
        
-        <div style={{marginTop:"40px",flex:1,height:"400px",overflowY:"auto",padding:"10px",borderRadius:"12px",background:"white"}}>
+        <div className="usersbox" style={{marginTop:"40px",flex:1,height:"400px",overflowY:"auto",padding:"10px",borderRadius:"12px",background:"white"}}>
        <h2 style={{textAlign:"center",color:"#e75480"}}>Users</h2>
     
       {filteredUsers.length === 0 ?(
         <p style={{textAlign:"center",color:"gray"}}>No users found</p>
       ):(
         filteredUsers.map((u:any)=>(
-          <div key={u.id}  style={{border:"1px solid #ccc",padding:"10px",marginBottom:"10px",background:"#f5f5f5"}} >
+          <div key={u.id}  style={{border:"1px solid #ccc",padding:"8px",marginBottom:"10px",background:"#f5f5f5",borderRadius:"12px",overflow:"hidden",wordBreak:"break-word"}} >
          <p>{u.name}</p>
          <p>{u.email}</p>
 

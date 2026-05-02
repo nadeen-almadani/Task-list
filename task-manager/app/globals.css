@@ -102,9 +102,15 @@ body {
 
 /* Responsive */
 
-@media(max-width:600px){
+@media(max-width:768px){
   .app{
     padding:12px;
     align-items:flex-start;
+  }
+  .dashboard-container{
+    flex-direction: column;
+  }
+  .taskbox,.usersbox{
+    width: 100% !important;
   }
 }
